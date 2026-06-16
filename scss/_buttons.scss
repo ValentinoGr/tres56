@@ -1,0 +1,37 @@
+@use "variables" as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.8rem;
+  font-family: $font-sans;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.btn--solid {
+  background-color: $color-red;
+  color: $color-bg-darker;
+
+  &:hover {
+    background-color: $color-red-light;
+  }
+}
+
+.btn--outline {
+  background-color: transparent;
+  border-color: rgba($color-white, 0.4);
+  color: $color-white;
+
+  &:hover {
+    border-color: $color-white;
+    background-color: rgba($color-white, 0.08);
+  }
+}

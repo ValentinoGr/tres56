@@ -1,0 +1,38 @@
+@use "variables" as *;
+
+.carta-teaser {
+  padding: $section-padding-y 0;
+  background-color: $color-bg-darker;
+  text-align: center;
+}
+
+.carta-teaser__header {
+  max-width: 600px;
+  margin: 0 auto 3rem;
+}
+
+.carta-teaser__text {
+  color: $color-text-muted;
+}
+
+.carta-teaser__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.carta-teaser__chip {
+  padding: 1.25rem 1rem;
+  border: 1px solid rgba($color-red, 0.25);
+  border-radius: 4px;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  color: $color-white;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+
+  &:hover {
+    border-color: $color-red;
+    background-color: rgba($color-red, 0.06);
+  }
+}

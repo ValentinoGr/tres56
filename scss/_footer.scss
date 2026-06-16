@@ -1,0 +1,40 @@
+@use "variables" as *;
+
+.footer {
+  padding: 3rem 0;
+  background-color: $color-bg-darker;
+  border-top: 1px solid rgba($color-white, 0.08);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.footer__logo {
+  height: 52px;
+}
+
+.footer__social {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.footer__social a {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+
+  &:hover {
+    color: $color-red;
+  }
+}
+
+.footer__copy {
+  font-size: 0.8rem;
+  color: rgba($color-white, 0.4);
+}
