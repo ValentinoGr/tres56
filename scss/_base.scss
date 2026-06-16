@@ -88,6 +88,10 @@ h3 {
   max-width: $container-max;
   margin: 0 auto;
   padding: 0 1.5rem;
+
+  @media (max-width: $bp-mobile) {
+    padding: 0 1rem;
+  }
 }
 
 .section-label {
