@@ -81,3 +81,22 @@ document.addEventListener("click", (event) => {
 
 const savedLang = localStorage.getItem("tres56-lang") || "es";
 applyLanguage(savedLang);
+
+// ── Scroll reveal ─────────────────────────────────────────────
+const revealEls = document.querySelectorAll("[data-reveal]");
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const delay = el.dataset.delay;
+      if (delay) el.style.transitionDelay = `${delay}ms`;
+      el.classList.add("is-visible");
+      revealObserver.unobserve(el);
+    });
+  },
+  { threshold: 0, rootMargin: "0px 0px -40px 0px" }
+);
+
+revealEls.forEach((el) => revealObserver.observe(el));

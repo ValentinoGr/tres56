@@ -1,39 +1,198 @@
 @use "variables" as *;
 
+// ── Keyframes ────────────────────────────────────────────────
+
+@keyframes hero-ken-burns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-title-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes hero-line-grow {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-scroll-bar {
+  0%   { transform: translateY(-100%); }
+  60%  { transform: translateY(36px); }
+  100% { transform: translateY(36px); }
+}
+
+// ── Hero ─────────────────────────────────────────────────────
+
 .hero {
   position: relative;
+  z-index: 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: linear-gradient($color-overlay, $color-overlay), url("../img/tres56.jpeg");
-  background-size: cover;
-  background-position: center;
   background-color: $color-bg-darker;
-  text-align: center;
-  margin-top: -$header-height;
   padding-top: $header-height;
+  padding-bottom: 6rem;
+  margin-top: -$header-height;
+  border-radius: 0 0 $frame-radius $frame-radius;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("../img/tres56.jpeg");
+    background-size: cover;
+    background-position: center;
+    animation: hero-ken-burns 20s ease-out both;
+    z-index: 0;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      to right,
+      rgba(10, 10, 10, 0.92) 0%,
+      rgba(10, 10, 10, 0.88) 38%,
+      rgba(10, 10, 10, 0.25) 70%,
+      rgba(10, 10, 10, 0.1) 100%
+    );
+    z-index: 1;
+  }
+
+  @media (max-width: $bp-tablet) {
+    text-align: center;
+
+    &::after {
+      background-image: linear-gradient(rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.8));
+    }
+  }
 }
 
 .hero__inner {
   position: relative;
+  z-index: 2;
   width: 100%;
+
+  @media (max-width: $bp-tablet) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+// ── Title group: badge + title side by side ───────────────────
+
+.hero__title-group {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: $bp-tablet) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
 }
 
 .hero__badge {
-  width: 90px;
-  height: 90px;
-  margin: 0 auto 2rem;
-  border: 1px solid rgba($color-red, 0.6);
-  border-radius: 50%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: $font-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-align: center;
-  color: $color-red-light;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  padding-right: 2.5rem;
+  flex-shrink: 0;
+  position: relative;
+  animation: hero-fade-up 0.7s ease both 0.5s;
+
+  // Línea divisoria animada
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba($color-red, 0.65), transparent);
+    transform-origin: top center;
+    animation: hero-line-grow 0.8s ease both 0.7s;
+  }
+
+  @media (max-width: $bp-tablet) {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding-right: 0;
+    padding-bottom: 0.75rem;
+
+    &::after {
+      top: auto;
+      bottom: 0;
+      right: auto;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba($color-red, 0.65), transparent);
+      transform-origin: left center;
+    }
+  }
 }
+
+.hero__badge-label {
+  font-family: $font-sans;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+}
+
+.hero__badge-year {
+  font-family: $font-serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  color: $color-red-light;
+  line-height: 1;
+}
+
+.hero__title-wrap {
+  // wrapper vacío, sólo agrupa título + tagline
+}
+
+// ── Resto del hero ────────────────────────────────────────────
 
 .hero__location {
   font-size: 0.85rem;
@@ -41,11 +200,13 @@
   text-transform: uppercase;
   color: $color-text-muted;
   margin-bottom: 1.5rem;
+  animation: hero-fade-up 0.7s ease both 0.4s;
 }
 
 .hero__title {
   font-size: clamp(3rem, 9vw, 6.5rem);
   color: $color-white;
+  animation: hero-title-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both 0.65s;
 }
 
 .hero__tagline {
@@ -53,29 +214,45 @@
   font-style: italic;
   font-size: clamp(1.5rem, 3vw, 2.25rem);
   color: $color-red-light;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
+  animation: hero-fade-up 0.7s ease both 0.85s;
 }
 
 .hero__text {
-  max-width: 620px;
-  margin: 1.75rem auto 2.5rem;
+  max-width: 480px;
+  margin: 1.75rem 0 2.5rem;
   color: $color-text-muted;
   font-size: 1.05rem;
+  animation: hero-fade-up 0.7s ease both 1s;
+
+  @media (max-width: $bp-tablet) {
+    margin: 1.75rem auto 2.5rem;
+  }
 }
 
 .hero__actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1.25rem;
   flex-wrap: wrap;
+  animation: hero-fade-up 0.6s ease both 1.15s;
+
+  @media (max-width: $bp-tablet) {
+    justify-content: center;
+  }
 }
 
 .hero__cards {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   flex-wrap: wrap;
   margin-top: 2rem;
+  animation: hero-fade-up 0.6s ease both 1.3s;
+
+  @media (max-width: $bp-tablet) {
+    justify-content: center;
+  }
 }
 
 .hero__card {
@@ -107,6 +284,7 @@
   position: absolute;
   bottom: 2rem;
   left: 50%;
+  z-index: 2;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
@@ -116,6 +294,7 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: $color-text-muted;
+  animation: hero-fade-in 0.8s ease both 1.8s;
 }
 
 .hero__scroll-track {
@@ -134,16 +313,4 @@
   height: 14px;
   background-color: $color-red;
   animation: hero-scroll-bar 1.8s ease-in-out infinite;
-}
-
-@keyframes hero-scroll-bar {
-  0% {
-    transform: translateY(-100%);
-  }
-  60% {
-    transform: translateY(36px);
-  }
-  100% {
-    transform: translateY(36px);
-  }
 }

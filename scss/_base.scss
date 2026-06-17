@@ -24,7 +24,7 @@ body {
   padding: $frame-margin;
 
   @media (max-width: $bp-mobile) {
-    padding: 6px;
+    padding: 10px;
   }
 }
 
@@ -33,6 +33,8 @@ body {
   border-radius: $frame-radius;
   overflow: hidden;
   background-color: $color-bg-dark;
+  outline: 1px solid rgba($color-white, 0.08);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 24px 80px rgba(0, 0, 0, 0.5);
 }
 
 .scroll-progress {
@@ -106,4 +108,28 @@ h3 {
 .section-title {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1.5rem;
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+
+  &[data-reveal="left"]  { transform: translateX(-44px); }
+  &[data-reveal="right"] { transform: translateX(44px); }
+  &[data-reveal="scale"] { transform: scale(0.92); }
+  &[data-reveal="fade"]  { transform: none; }
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition-duration: 0.01ms !important;
+  }
 }
